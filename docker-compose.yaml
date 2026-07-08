@@ -1,10 +1,10 @@
 services:
   react-app:
-    build:
-      context: .
-      args:
-        - API_BASE_URL=http://localhost:3000
+    image: ghcr.io/bluenyang/my-react-app:latest
     container_name: react-app
-    ports:
-      - '80:80'
     restart: unless-stopped
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.react-app.rule=Host(`bluenyang.croffledev.kr`)'
+      - 'traefik.http.routers.react-app.entrypoints=websecure'
+      - 'traefik.http.services.react-app.loadbalancer.server.port=80'
